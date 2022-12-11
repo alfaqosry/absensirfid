@@ -39,14 +39,14 @@ class BarangController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'nama_barang'=>'required',
-            'kategori_id'=>'required',
-            'harga_barang'=>'required|min:3|max:50',
-            'foto'=>'required'
+            'nama_barang' => 'required',
+            'kategori_id' => 'required',
+            'harga_barang' => 'required|min:3|max:50',
+            'foto' => 'required'
         ]);
 
         $barang = $request->all();
-        $barang['foto'] = $request->file('foto')->store('foto','public');
+        $barang['foto'] = $request->file('foto')->store('foto', 'public');
         Barang::create($barang);
 
         return redirect()->route('barang')->with('sukses', 'Data Berhasil di-Tambahkan');
@@ -57,33 +57,29 @@ class BarangController extends Controller
         $kategori = Kategori::all();
         $barang = Barang::findorfail($id);
 
-        return view('barang.edit', compact('kategori','barang'));
+        return view('barang.edit', compact('kategori', 'barang'));
     }
 
     public function update(Request $request, $id)
     {
         $request->validate([
-            'nama_barang'=>'required',
-            'kategori_id'=>'required',
-            'harga_barang'=>'required|min:3|max:50',
+            'nama_barang' => 'required',
+            'kategori_id' => 'required',
+            'harga_barang' => 'required|min:3|max:50',
         ]);
 
         $barang = Barang::findorfail($id);
+
+        $fileName = 'public/' . $barang->foto;
+
         $barang->update($request->all());
-        if($request->hasFile('foto')){
-            if(File::exists(public_path($request->foto))){
-                File::delete(public_path($request->foto));
-            }
-            // if($request->foto && file_exists(storage_path('app/public/',$request->foto))){
-            //  Storage::delete('public/'.$request->foto);
-            // }
-            $file = $request->file('foto')->store('foto','public');
+        if ($request->hasFile('foto')) {
+            Storage::disk('local')->delete($fileName);
+
+            $file = $request->file('foto')->store('foto', 'public');
             $barang->foto = $file;
             $barang->save();
         }
-
-        
-        
 
         return redirect()->route('barang')->with('sukses', 'Data Berhasil di-Tambahkan');
     }
@@ -91,10 +87,9 @@ class BarangController extends Controller
     public function delete($id)
     {
         $barang = Barang::findorfail($id);
-        if($barang = Barang::findorfail($id)){
-            if(File::exists(public_path($barang->foto))){
-                File::delete(public_path($barang->foto));
-            }
+        $fileName = 'public/' . $barang->foto;
+        if ($barang) {
+            Storage::disk('local')->delete($fileName);
         }
         $barang->delete();
 
