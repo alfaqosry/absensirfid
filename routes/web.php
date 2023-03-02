@@ -2,9 +2,12 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\RfidController;
 use App\Http\Controllers\BarangController;
+use App\Http\Controllers\JadwalController;
 use App\Http\Controllers\KategoriController;
 use App\Http\Controllers\PenggunaController;
+use App\Http\Controllers\TasemeterController;
 use App\Http\Controllers\TransaksiController;
 
 
@@ -25,6 +28,7 @@ Route::group(['middleware' => ['guest']], function () {
     Route::get('/registrasi',[AuthController::class, 'registrasi'])->name('registrasi');
     Route::post('/post',[AuthController::class, 'post'])->name('login.post');
     Route::post('/store',[AuthController::class, 'store'])->name('registrasi.store');
+    Route::get('/rfid',[RfidController::class, 'rfid'])->name('rfid');
 });
 
 Route::get('/logout',[AuthController::class, 'logout'])->name('logout');
@@ -32,17 +36,28 @@ Route::get('/barang_test',[BarangController::class, 'index_test'])->name('barang
 
 // admin
 Route::group(['middleware' => ['auth', 'checkRole:Admin']], function () {
-    Route::get('/', function () {
-        return view('dashboard');
-    })->name('dashboard');
+    Route::get('/', [TasemeterController::class, 'index'])->name('tasemeter');
 
-    // kategori
-    Route::get('/kategori',[KategoriController::class, 'index'])->name('kategori');
-    Route::get('/kategori/create',[KategoriController::class, 'create'])->name('kategori.create');
-    Route::post('/kategori/store',[KategoriController::class, 'store'])->name('kategori.store');
-    Route::get('/kategori/edit/{id}',[KategoriController::class, 'edit'])->name('kategori.edit');
-    Route::post('/kategori/update/{id}',[KategoriController::class, 'update'])->name('kategori.update');
-    Route::get('/kategori/delete/{id}',[KategoriController::class, 'delete'])->name('kategori.delete');
+    // tasemeter
+    Route::get('/tasemeter',[TasemeterController::class, 'index'])->name('tasemeter');
+    Route::get('/tasemeter/create',[TasemeterController::class, 'create'])->name('tasemeter.create');
+    Route::post('/tasemeter/store',[TasemeterController::class, 'store'])->name('tasemeter.store');
+    Route::get('/tasemeter/edit/{id}',[TasemeterController::class, 'edit'])->name('tasemeter.edit');
+    Route::post('/tasemeter/update/{id}',[TasemeterController::class, 'update'])->name('tasemeter.update');
+    Route::get('/tasemeter/delete/{id}',[TasemeterController::class, 'delete'])->name('tasemeter.delete');
+    Route::get('/absen/{id}',[TasemeterController::class, 'show'])->name('tasemeter.show');
+
+
+    // rfid
+
+   
+      // jadwal
+      Route::get('/jadwal',[JadwalController::class, 'index'])->name('jadwal');
+      Route::get('/jadwal/create/{id}',[JadwalController::class, 'create'])->name('jadwal.create');
+      Route::post('/jadwal/store',[JadwalController::class, 'store'])->name('jadwal.store');
+      Route::get('/jadwal/edit/{id}',[JadwalController::class, 'edit'])->name('jadwal.edit');
+      Route::post('/jadwal/update/{id}',[JadwalController::class, 'update'])->name('jadwal.update');
+      Route::get('/jadwal/delete/{id}',[JadwalController::class, 'delete'])->name('jadwal.delete');
 
     // barang
     Route::get('/barang',[BarangController::class, 'index'])->name('barang');
@@ -70,9 +85,7 @@ Route::group(['middleware' => ['auth', 'checkRole:Admin']], function () {
 
 //ROlE USER
 Route::group(['middleware' => ['auth', 'checkRole:Admin,User']], function () {
-    Route::get('/', function () {
-        return view('dashboard');
-    })->name('dashboard');
+    Route::get('/', [TasemeterController::class, 'index'])->name('tasemeter');
 
     Route::get('/view_barang',[BarangController::class, 'view_barang'])->name('view_barang');
 

@@ -5,18 +5,13 @@
                 <div class="sidebar-brand-icon rotate-n-15">
                     <i class="fas fa-shopping-cart"></i>
                 </div>
-                <div class="sidebar-brand-text mx-3">Transaksi</div>
+                <div class="sidebar-brand-text mx-3">Absensi Karyawan SDN 006</div>
             </a>
 
             <!-- Divider -->
             <hr class="sidebar-divider my-0">
 
-            <!-- Nav Item - Dashboard -->
-            <li class="nav-item @yield('dashboard')">
-                <a class="nav-link" href="/">
-                    <i class="fas fa-fw fa-tachometer-alt"></i>
-                    <span>Dashboard</span></a>
-            </li>
+          
 
             <!-- Divider -->
             <hr class="sidebar-divider">
@@ -30,13 +25,7 @@
             <li class="nav-item @yield('barang_view')">
                 <a class="nav-link collapsed" href="{{route('view_barang')}}" >
                     <i class="fas fa-fw fa-shopping-cart"></i>
-                    <span>Barang</span>
-                </a>
-            </li>
-            <li class="nav-item @yield('transaksi')">
-                <a class="nav-link collapsed" href="{{route('transaksi')}}" >
-                    <i class="fas fa-fw fa-chart-area"></i>
-                    <span>Transaksi</span>
+                    <span>Absensi Saya</span>
                 </a>
             </li>
             @if (auth()->user()->role == "Admin")
@@ -49,8 +38,8 @@
                 <div id="collapseTwo" class="collapse @yield('index_show')" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
                     <div class="bg-white py-2 collapse-inner rounded">
                         <h6 class="collapse-header">Master Data:</h6>
-                        <a class="collapse-item @yield('barang')" href="{{route('barang')}}">Barang</a>
-                        <a class="collapse-item @yield('kategori')" href="{{route('kategori')}}">Kategori</a>
+                        <a class="collapse-item @yield('barang')" href="{{route('tasemeter')}}">Absensi </a>
+                        {{-- <a class="collapse-item @yield('tasemeter')" href="{{route('tasemeter')}}">Kategori</a> --}}
                     </div>
                 </div>
             </li>
