@@ -3,7 +3,7 @@
             <!-- Sidebar - Brand -->
             <a class="sidebar-brand d-flex align-items-center justify-content-center" href="">
                 <div class="sidebar-brand-icon rotate-n-15">
-                    <i class="fas fa-shopping-cart"></i>
+                    <i class="fas fa-check"></i>
                 </div>
                 <div class="sidebar-brand-text mx-3">Absensi Karyawan SDN 006</div>
             </a>
@@ -18,13 +18,13 @@
 
             <!-- Heading -->
             <div class="sidebar-heading">
-                Interface
+                User
             </div>
 
             <!-- Nav Item - Pages Collapse Menu -->
-            <li class="nav-item @yield('barang_view')">
-                <a class="nav-link collapsed" href="{{route('view_barang')}}" >
-                    <i class="fas fa-fw fa-shopping-cart"></i>
+            <li class="nav-item @yield('absensaya')">
+                <a class="nav-link collapsed" href="{{route('absen')}}" >
+                    <i class="fas fa-fw fa-check"></i>
                     <span>Absensi Saya</span>
                 </a>
             </li>

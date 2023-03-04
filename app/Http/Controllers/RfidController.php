@@ -6,20 +6,30 @@ use App\Models\User;
 use App\Models\Jadwal;
 use App\Models\Dataabsen;
 use Illuminate\Http\Request;
+use Symfony\Component\HttpFoundation\Response;
 
 class RfidController extends Controller
 {
-    public function Rfid() {
-        $id = "12345678";
+    public function Rfid($id) {
+      
+        
         $tglsaatini = date('d');
         $blnsaatini = date('m');
         $thnsaatini = date('Y');
-        $jamsaatini = date('H:i', time());
+        $jamsaatini = date('H:i');
      
-        $jammasuk = '7:30';
-        $jamkeluar = '12:30';
+        $jammasuk = '07:30';
+        $jamkeluar = '14:50';
+        
 
-        $jadwasaatini = Jadwal::where(['tanggal', $tglsaatini, 'bulan', $blnsaatini, 'tahun', $thnsaatini, ])->first();
+        $jadwasaatini = Jadwal::where('tanggal', $tglsaatini)
+        ->where('bulan', $blnsaatini,)
+        ->where('tahun', $thnsaatini)->first();
+        $user = User::where('rfid', $id)->first();
+
+        $cekin = Dataabsen::where('jadwal_id', $jadwasaatini->id )
+        ->where('user_id' , $user->id)->first();
+
         $user = User::where('rfid', $id)->first();
 
         if( $user != null) {
@@ -27,10 +37,11 @@ class RfidController extends Controller
             if( $jadwasaatini != null ) {
     if( $jadwasaatini->hari != "Sunday"){
     
-
-                if ($jamsaatini < $jammasuk ){
-
-
+ 
+                if (strtotime($jamsaatini) <= strtotime($jammasuk) &&  !$cekin  ){
+                    
+                    
+                  
                     $data = [
                         'jadwal_id' => $jadwasaatini->id,
                         'user_id' => $user->id,
@@ -50,6 +61,54 @@ class RfidController extends Controller
             
                     return response()->json($response, Response::HTTP_OK);
 
+
+                }elseif (strtotime($jamsaatini) >= strtotime($jammasuk) &&  !$cekin ) {
+                   
+                    
+                    $data = [
+                        'jadwal_id' => $jadwasaatini->id,
+                        'user_id' => $user->id,
+                        'status' => "Terlambat",
+                        'in' => $jamsaatini,
+                        'out' => null
+
+                    ];
+
+                    Dataabsen::create($data);
+                    $response = [
+                        'message' => 'Absen Terlambat',
+                        'status' =>"berhasil",
+                        'nama' => $user->name
+                        
+                    ];
+            
+                    return response()->json($response, Response::HTTP_OK);
+                }elseif(strtotime($jamsaatini) >= strtotime($jamkeluar) &&  $cekin){
+
+                    $absenkeluar = Dataabsen::find($cekin->id);
+                    $absenkeluar->out =$jamsaatini;
+                    $absenkeluar->save();
+
+                    $response = [
+                        'message' => 'Absen Pulang',
+                        'status' =>"berhasil",
+                        'nama' => $user->name
+                        
+                    ];
+            
+                    return response()->json($response, Response::HTTP_OK);
+
+                }else {
+
+                    
+                    $response = [
+                        'message' => 'Anda Sudah Absen',
+                        'status' =>"berhasil",
+                        'nama' => $user->name
+                        
+                    ];
+            
+                    return response()->json($response, Response::HTTP_OK);
 
                 }
             }else{

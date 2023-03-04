@@ -8,7 +8,7 @@ use App\Http\Controllers\JadwalController;
 use App\Http\Controllers\KategoriController;
 use App\Http\Controllers\PenggunaController;
 use App\Http\Controllers\TasemeterController;
-use App\Http\Controllers\TransaksiController;
+use App\Http\Controllers\Absencontroller;
 
 
 /*
@@ -22,13 +22,13 @@ use App\Http\Controllers\TransaksiController;
 |
 */
 
-
+Route::get('/rfid/{id}',[RfidController::class, 'rfid'])->name('rfid');
 Route::group(['middleware' => ['guest']], function () {
     Route::get('/login',[AuthController::class, 'login'])->name('login');
     Route::get('/registrasi',[AuthController::class, 'registrasi'])->name('registrasi');
     Route::post('/post',[AuthController::class, 'post'])->name('login.post');
     Route::post('/store',[AuthController::class, 'store'])->name('registrasi.store');
-    Route::get('/rfid',[RfidController::class, 'rfid'])->name('rfid');
+   
 });
 
 Route::get('/logout',[AuthController::class, 'logout'])->name('logout');
@@ -46,6 +46,9 @@ Route::group(['middleware' => ['auth', 'checkRole:Admin']], function () {
     Route::post('/tasemeter/update/{id}',[TasemeterController::class, 'update'])->name('tasemeter.update');
     Route::get('/tasemeter/delete/{id}',[TasemeterController::class, 'delete'])->name('tasemeter.delete');
     Route::get('/absen/{id}',[TasemeterController::class, 'show'])->name('tasemeter.show');
+
+
+
 
 
     // rfid
@@ -78,6 +81,8 @@ Route::group(['middleware' => ['auth', 'checkRole:Admin']], function () {
     Route::get('/pengguna/edit/{id}', [PenggunaController::class, 'edit'])->name('pengguna.edit');
     Route::get('/pengguna/index', [PenggunaController::class, 'index'])->name('pengguna.index');
     Route::post('/pengguna/update/{id}', [PenggunaController::class, 'update'])->name('pengguna.update');
+    Route::post('/pengguna/store/', [PenggunaController::class, 'store'])->name('pengguna.store');
+    Route::get('/pengguna/create/', [PenggunaController::class, 'create'])->name('pengguna.create');
     Route::get('/pengguna/delete/{id}', [PenggunaController::class, 'delete'])->name('pengguna.delete');
 
 });
@@ -85,13 +90,12 @@ Route::group(['middleware' => ['auth', 'checkRole:Admin']], function () {
 
 //ROlE USER
 Route::group(['middleware' => ['auth', 'checkRole:Admin,User']], function () {
-    Route::get('/', [TasemeterController::class, 'index'])->name('tasemeter');
+    Route::get('/',[AbsenController::class, 'index'])->name('absen');
 
-    Route::get('/view_barang',[BarangController::class, 'view_barang'])->name('view_barang');
-
-    //transaksi
-    Route::get('/transaksi',[TransaksiController::class, 'index'])->name('transaksi');
-    Route::get('/buy/{id}',[TransaksiController::class, 'buy'])->name('buy.barang');
+    
+    // absen saya
+    Route::get('/absensaya',[AbsenController::class, 'index'])->name('absen');
+    Route::get('/lihatabsen/{id}',[AbsenController::class, 'show'])->name('lihatabsen');
 });
 
 

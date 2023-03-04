@@ -1,7 +1,7 @@
 @extends('layouts.app')
 @section('index_show','show')
 @section('index','active')
-@section('absen','active')
+@section('absensaya','active')
 @section('content')
 <!-- Page Heading -->
 <h1 class="h3 mb-2 text-gray-800">{{ $tasemeter->tahun_ajaran}}</h1>
@@ -13,7 +13,7 @@
 <!-- DataTales Example -->
 <div class="card shadow mb-4">
     <div class="card-header py-3">
-        
+       
     </div>
     <div class="card-body">
         <div class="table-responsive">
@@ -29,17 +29,17 @@
                     </tr>
                 </thead>
                 <tbody>
-                    @foreach($user as $item)
+                  
                     <tr>
                         {{-- <td>{{$loop->iteration}}</td> --}}
 
-                        <th>{{$item->name}}</th>
+                        <th>{{$user->name}}</th>
                         @foreach ($jadwal as $j )
                         @php
 
                         $dataabsen = App\Models\Dataabsen::select('*')
                         ->where('jadwal_id', '=', $j->id)
-                        ->where('user_id', '=', $item->id)
+                        ->where('user_id', '=', $user->id)
                         ->first();
 
                         @endphp
@@ -93,7 +93,7 @@
                                 onclick="return confirm('Hapus Data ?')"><i class="fas fa-trash"></i> Hapus</a>
                         </td> --}}
                     </tr>
-                    @endforeach
+               
                 </tbody>
             </table>
         </div>

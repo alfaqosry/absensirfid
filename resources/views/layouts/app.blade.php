@@ -9,7 +9,7 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>Transaksi</title>
+    <title>System Absensi SDN 006 Salo</title>
 
     <!-- Custom fonts for this template-->
     {{-- <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/css/bootstrap.min.css" integrity="sha384-zCbKRCUGaJDkqS1kPbPd7TveP5iyJE0EjAuZQTgFLD2ylzuqKfdKlfG/eSrtxUkn" crossorigin="anonymous"> --}}
@@ -108,7 +108,7 @@
     <script src="{{asset('beckand/vendor/datatables/dataTables.bootstrap4.min.js')}}"></script>
 
     <!-- Page level custom scripts -->
-    <script src="{{asset('beckand/js/demo/datatables-demo.js')}}"></script>
+    {{-- <script src="{{asset('beckand/js/demo/datatables-demo.js')}}"></script> --}}
 
 </body>
 

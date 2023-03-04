@@ -16,7 +16,8 @@
     <!-- DataTales Example -->
     <div class="card shadow mb-4">
         <div class="card-header py-3">
-            {{-- <a href="" class="btn btn-primary btn-sm"><i class="fas fa-plus"></i> Tambah Data</a> --}}
+            <a href="{{route('pengguna.create')}}" class="btn btn-primary btn-sm"><i class="fas fa-plus"></i> Tambah Pegawai</a>
+         
         </div>
         <div class="card-body">
             <div class="table-responsive">
@@ -27,6 +28,8 @@
                             <th>Name</th>
                             <th>Role</th>
                             <th>Email</th>
+                            <th>Jabatan</th>
+                            <th>RFID</th>
                             <th>Aksi</th>
                         </tr>
                     </thead>
@@ -37,6 +40,8 @@
                                 <td>{{ $item->name }}</td>
                                 <td>{{ $item->role }}</td>
                                 <td>{{ $item->email }}</td>
+                                <td>{{ $item->jabatan }}</td>
+                                <td>{{ $item->rfid }}</td>
                                 <td>
                                     <a href="{{ route('pengguna.edit', $item->id) }}" class="btn btn-warning btn-sm"><i
                                             class="fas fa-edit"></i> Edit</a>

@@ -6,7 +6,7 @@
 
 <!-- DataTales Example -->
 <div class="card shadow mb-4">
-    <form action="{{Route('pengguna.update', $user->id)}}" method="post">
+    <form action="{{Route('pengguna.store')}}" method="post">
         {{ csrf_field() }}
         <div class="card-header py-3">
             <a href="{{route('pengguna.index')}}" class="btn btn-warning btn-sm"><i class="fas fa-chevron-left"></i>
@@ -21,23 +21,18 @@
 
                 <div class="form-group col-md-6">
                     <label for="name">Nama</label>
-                    <input name="name" type="text" class="form-control" id="name" required value="{{ $user->name }}">
+                    <input name="name" type="text" class="form-control" id="name" required value="{{ old('name') }}">
                 </div>
 
                 <div class="form-group col-md-6">
                     <label for="email">Email</label>
-                    <input name="email" type="text" class="form-control" id="email" required value="{{ $user->email }}">
+                    <input name="email" type="text" class="form-control" id="email" required value="{{ old('email') }}">
                 </div>
 
                 <div class="form-group col-md-6">
                     <label for="role">Role</label>
                     <select id="role" name="role" class="form-control">
-                        <option value="{{$user->role}}">@if ($user->role == "User")
-                            Pegawai
-                            @elseif ($user->role == "Admin")
-                            Admin
-                            
-                        @endif</option>
+                        <option value="">Choose...</option>
                         <option value="Admin">Admin</option>
                         <option value="User">Pegawai</option>
                     </select>
@@ -46,18 +41,18 @@
                 <div class="form-group col-md-6">
                     <label for="jabatan">Jabatan</label>
                     <input name="jabatan" type="text" class="form-control" id="jabatan" required
-                        value="{{ $user->jabatan }}">
+                        value="{{ old('jabatan') }}">
                 </div>
 
 
                 <div class="form-group col-md-6">
                     <label for="rfid">RFID</label>
-                    <input name="rfid" type="text" class="form-control" id="jabatan" required value="{{ $user->rfid }}">
+                    <input name="rfid" type="text" class="form-control" id="jabatan" required value="{{ old('rfid') }}">
                 </div>
 
                 <div class="form-group col-md-6">
                     <label for="password">Password</label>
-                    <input name="password" type="password" class="form-control" id="password" >
+                    <input name="password" type="password" class="form-control" id="password" required>
                 </div>
 
 
