@@ -23,16 +23,17 @@ class RfidController extends Controller
         
 
         $jadwasaatini = Jadwal::where('tanggal', $tglsaatini)
-        ->where('bulan', $blnsaatini,)
+        ->where('bulan', $blnsaatini)
         ->where('tahun', $thnsaatini)->first();
         $user = User::where('rfid', $id)->first();
 
-        $cekin = Dataabsen::where('jadwal_id', $jadwasaatini->id )
-        ->where('user_id' , $user->id)->first();
-
+       
         $user = User::where('rfid', $id)->first();
 
         if( $user != null) {
+             $cekin = Dataabsen::where('jadwal_id', $jadwasaatini->id )
+        ->where('user_id' , $user->id)->first();
+
 
             if( $jadwasaatini != null ) {
     if( $jadwasaatini->hari != "Sunday"){
@@ -103,7 +104,7 @@ class RfidController extends Controller
                     
                     $response = [
                         'message' => 'Anda Sudah Absen',
-                        'status' =>"berhasil",
+                        'status' =>"gagal",
                         'nama' => $user->name
                         
                     ];
@@ -135,7 +136,7 @@ class RfidController extends Controller
 
             $response = [
                 'message' => 'Pegawai tidak terdaftar',
-                'status' =>"gagal",
+                'status' =>"tidak terdaftar",
                 
             ];
     
